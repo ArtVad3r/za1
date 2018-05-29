@@ -1,86 +1,82 @@
 #include <stdio.h>
-#include <stdlib.h>
 #define MAX 20
 
-void NacitajMaticu(int r, int s, int A[MAX][MAX])
-{
-	int i, j;
-	for (i = 0; i<r; i++)
-	{
-		for (j = 0; j<s; j++)
-			scanf("%d", &A[i][j]);
-	}
+void NacitajMaticu(int r, int s, int A[MAX][MAX]){
+    int i, j;
+    printf("Zadajte prvky matice:\n");
+    for(i=0; i<r; i++){
+        for(j=0;j<s;j++)
+            scanf("%d", &A[i][j]);
+    }
+
 }
 
-void VypisMaticu(int r, int s, int A[MAX][MAX])
-{
-	int i, j;
+void VypisMaticu(int r, int s, int A[MAX][MAX]){
+    int i, j;
+    printf("Vypis matice: \n");
+    for(i=0; i<r; i++){
+        for(j=0;j<s;j++)
+            printf("%5d", A[i][j]);
+        printf("\n");
+    }
 
-	for (i = 0; i<r; i++)
-	{
-		for (j = 0; j<s; j++)
-			printf("%5d", A[i][j]);
-		printf("\n");
-	}
+
 }
 
-void ParnePrvkyNadDiagonalou(int r, int s, int A[MAX][MAX],
-	int parne_prvky_pod_diag_f[MAX], int *p_pocet_parn_prvkov_f, double *p_priemer_f, int *p_suma_f)
-{
-	int i, j, mod, k = 0, pocet_parnych = 0, suma = 0, l = 0;
-	double priemer = 0;
+void ParnePrvkyNadDiagonalou(int r, int s, int A[MAX][MAX], int parne_prvky_nad_diag_f[MAX], int *p_pocet_f, int *p_suma_f, double *p_priemer_f){
+    //zavedenie premennych na docasne pouzitie
+    int i, j, k=0, mod=0;
 
-	for (i = 0; i<r; i++)
-	{
-		for (j = 0; j<s; j++)
-		{
-			mod = A[i][j] % 2;
-			if ((mod == 0) && (i<j))
-			{
-				parne_prvky_pod_diag_f[k] = A[i][j];
-				pocet_parnych++;
-				suma += parne_prvky_pod_diag_f[k];
-				k++;
-			}
-		}
-	}
-	priemer = suma / (double)pocet_parnych;
+    //cyklus, prechadzanie matice a nasledne zapisovanie udajov pri vyhovujucej pozicii v matici
+    for(i=0; i<r; i++){
+        for(j=0;j<s;j++) {
+            mod = A[i][j] % 2;
+            k++;
+            if (i < j & mod == 0) {
+                parne_prvky_nad_diag_f[k] = A[i][j];
+                *p_pocet_f += 1;
+                *p_suma_f += A[i][j];
+            }
+        }
+    }
+    *p_priemer_f = *p_suma_f / (double)*p_pocet_f;
 
-
-	*p_pocet_parn_prvkov_f = pocet_parnych;
-	*p_priemer_f = priemer;
-	*p_suma_f = suma;
 }
-int main()
-{
-	int i, riadok, stlpec, pocet_parn_prvkov, suma;
-	int A[MAX][MAX], parne_prvky_pod_diag[MAX];
-	double priemer;
 
-	int *p_pocet_parn_prvkov, *p_suma;
-	double *p_priemer;
+int main(int argc, char* argv[]) {
+    //definovanie premennych a pointerov
+    int r_a, s_a, A[MAX][MAX], parne_prvky_nad_diag_f[MAX], *p_suma_f, suma_parnych = 0, pocet_parnych = 0, *p_pocet_f;
+    double priemer_parnych = 0, *p_priemer_f;
 
-	p_pocet_parn_prvkov = &pocet_parn_prvkov;
-	p_priemer = &priemer;
-	p_suma = &suma;
+    //zavedenie pointerov
+    p_pocet_f = &pocet_parnych;
+    p_suma_f = &suma_parnych;
+    p_priemer_f = &priemer_parnych;
 
-	scanf("%d %d", &riadok, &stlpec);
 
-	NacitajMaticu(riadok, stlpec, A);
-	printf("Matica A:\n");
-	VypisMaticu(riadok, stlpec, A);
+    //zadanie rozmerov matice s kontrolou neplatnej velkosti
+    do {
+        printf("Zadajte rozmery matice: \n");
+        scanf("%d %d", &r_a, &s_a);
 
-	ParnePrvkyNadDiagonalou(riadok, stlpec, A, parne_prvky_pod_diag, p_pocet_parn_prvkov, p_priemer, p_suma);
+        if (r_a > 19 || s_a > 19)
+            printf("\n[CHYBA] Zadali ste vacsi rozmer, ako je povoleny. Zadajte rozmery znovu: \n\n");
+        else if (r_a < 1, s_a < 1)
+            printf("\n[CHYBA] Zadali ste nezmyselnu velkost matice. Zadajte rozmery znovu: \n \n");
 
-	printf("\nParne prvky nad hlavnou diagonalou matice A su:  ");
-	for (i = 0; i<pocet_parn_prvkov; i++)
-		printf("%3d", parne_prvky_pod_diag[i]);
+    } while (r_a > 19 || s_a > 19 || r_a < 1, s_a < 1);
 
-	printf("\nPocet parnych prvkov nad hlavnou diagonalou matice A je: %d", pocet_parn_prvkov);
-	printf("\nPriemer parnych prvkov nad hlavnou diagonalou matice A je: %.2f", priemer);
-	printf("\nSuma parnych prvkov nad hlavnou diagonalou matice A je: %d\n", suma);
-	printf("\n");
 
-	return 0;
+    //nacitanie a vypisanie matice
+    NacitajMaticu(r_a, s_a, A);
+    VypisMaticu(r_a, s_a, A);
 
+    //spustenie algoritmu na analyzu a spracovanie matice, posielanie adries pointerov
+    ParnePrvkyNadDiagonalou(r_a, s_a, A, parne_prvky_nad_diag_f, p_pocet_f, p_suma_f, p_priemer_f);
+
+    //vypisanie vysledkov
+    printf("Priemer parnych cisel trojuholniku nad diagonalou je: %.2f\nSuma parnych cisel trojuholniku nad diagonalou je: %d\nPocet parnych cisel nad diagonalou je: %d\n",
+           priemer_parnych, suma_parnych, pocet_parnych);
+
+    return 0;
 }
