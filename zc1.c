@@ -1,17 +1,19 @@
 #include<stdio.h>
 int main()
 {
-	int a, s = 0;
+    int k = 1, i, n = 0;
 
-	do
-	{
-		scanf("%d", &a);
-		if (a>25)
-		{
-			s++;
-		}
-	} while (a != 0);
-	printf("%d\n", s);
+    do
+    {
+        printf("Zadajte %d. hodnotu: ", k++);
+        scanf("%d", &i);
+        if (i>25)
+        {
+            n++;
+        }
+    } while (i != 0);
+    printf("Dokopy hodnoty prekracujuce 25 mA: ");
+    printf("%d\n", n);
 
-	return 0;
+    return 0;
 }
