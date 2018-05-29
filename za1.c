@@ -1,15 +1,14 @@
 #include<stdio.h>
-#define max 100
 int main()
 {
-	int cisla[max], i = 0, suma = 0;
+    int i, suma = 0;
 
-	do
-	{
-		scanf("%d", &cisla[i]);
-		suma += cisla[i];
-	} while (cisla[i++] != 0);
+    do
+    {
+        scanf("%d", &i);
+        suma += i;
+    } while (i != 0);
 
-	printf("\nsuma: %d \n", suma);
-	return 0;
+    printf("\nsuma: %d \n", suma);
+    return 0;
 }
