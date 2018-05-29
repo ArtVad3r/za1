@@ -5,7 +5,6 @@
 void NacitajMaticu(int r, int s, int A[MAX][MAX])
 {
 	int i, j;
-
 	for (i = 0; i<r; i++)
 	{
 		for (j = 0; j<s; j++)
