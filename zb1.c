@@ -1,13 +1,15 @@
-#include <stdio.h>
+#include<stdio.h>
+
 int main()
 {
-	float a, suma = 0;
-	do
-	{
-		scanf("%f", &a);
-		suma += a;
-	} while (suma <= 10);
-	suma -= a;
-	printf("%.2f", suma);
-	return 0;
+    int pocitadlo = 1;
+    float i, suma=0;
+    do {
+        printf("%d. sladkost.\n", pocitadlo++);
+        scanf("%f", &i);
+        suma += i;
+    }while(suma<=10);
+    suma -= i;
+    printf("Nakup bol vycisleny na: %2f eur", suma);
+    return 0;
 }
