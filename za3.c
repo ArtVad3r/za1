@@ -1,4 +1,3 @@
-A3:Bez komplexnych
 #include <stdio.h>
 #define MAX 20
   
