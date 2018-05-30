@@ -34,7 +34,7 @@ void NeparnePrvkyPodDiagonalou(int r, int s, int A[MAX][MAX], int neparne_prvky_
             if (i > j && mod != 0) {
                 neparne_prvky_pod_diag_f[k++] = A[i][j];
                 *p_pocet_f += 1;
-                *p_suma_f += A[i][j];
+                *p_suma_f += A[i][j]; 
             }
         }
     }
